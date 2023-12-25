@@ -1,0 +1,315 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Définir une structure pour stocker les informations sur les bus
+struct Bus {
+    int numeroBus;
+    char source[50];
+    char destination[50];
+    int totalSieges;
+    int siegesDisponibles;
+    float tarif;
+    char heureDepart[5];
+    char heureArrivee[5];
+};
+
+// Définir une structure pour stocker les informations sur les passagers
+struct Passager {
+    char nom[50];
+    int age;
+    int numeroSiege;
+    int numeroBus;
+};
+// Définir une structure pour stocker les informations de connexion de l'utilisateur
+struct Utilisateur {
+    char nomUtilisateur[50];
+    char motDePasse[50];
+};
+void afficherMenuPrincipal();// Déclaration de la fonction pour afficher le menu principal
+void afficherMenuUtilisateur();// Déclaration de la fonction pour afficher le menu utilisateur
+int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,char nomUtilisateur[], char motDePasse[]);// Déclaration de la fonction pour connecter un utilisateur
+void reserverBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);// Déclaration de la fonction pour réserver un billet
+void annulerBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);// Déclaration de la fonction pour annuler un billet
+void verifierEtatBus(struct Bus bus[], int nbBuses);// Déclaration de la fonction pour vérifier l'état du bus
+void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur);// Fonction pour afficher les détails d'une réservation
+
+// Fonction pour afficher le menu principal
+void afficherMenuPrincipal() {
+    printf("\n*** Système de Réservation de Bus ***\n");
+    printf("1. Connexion\n");
+    printf("2. Quitter\n");
+    printf("Entrez votre choix : ");
+}
+
+// Fonction pour afficher le menu utilisateur
+void afficherMenuUtilisateur() {
+    printf("\n*** Menu Utilisateur ***\n");
+    printf("1. Réserver un billet\n");
+    printf("2. Modifier les détails d'une reservation\n");
+    printf("3. Annuler un billet\n");
+    printf("4. Vérifier l'état du bus\n");
+    printf("5. Déconnexion\n");
+    printf("Entrez votre choix : ");
+}
+
+// Fonction pour effectuer la connexion de l'utilisateur
+int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,
+                        char nomUtilisateur[], char motDePasse[]) {
+    for (int i = 0; i < nbUtilisateurs; i++) {
+        if (strcmp(utilisateurs[i].nomUtilisateur, nomUtilisateur) == 0 &&
+            strcmp(utilisateurs[i].motDePasse, motDePasse) == 0) {
+            return i; // Retourne l'index de l'utilisateur connecté
+        }
+    }
+    return -1; // Retourne -1 si la connexion échoue
+}
+
+// Fonction pour réserver un billet
+void reserverBillet(struct Bus bus[], int nbBuses,
+                    struct Passager passagers[], int *nbPassagers, int idUtilisateur) {
+    printf("\nEntrez le numéro du bus : ");
+    int numeroBus;
+    scanf("%d", &numeroBus);
+
+    // Rechercher le bus avec le numéro de bus donné
+    int indiceBus = -1;
+    for (int i = 0; i < nbBuses; i++) {
+        if (bus[i].numeroBus == numeroBus) {
+            indiceBus = i;
+            break;
+        }
+    }
+
+    if (indiceBus == -1) {
+        printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
+    } else if (bus[indiceBus].siegesDisponibles == 0) {
+        printf("Désolé, le bus est complet.\n");
+    } else {
+        printf("Entrez le nom du passager : ");
+        scanf("%s", passagers[*nbPassagers].nom);
+
+        printf("Entrez l'âge du passager : ");
+        scanf("%d", &passagers[*nbPassagers].age);
+
+        // Assigner un numéro de siège au passager
+        passagers[*nbPassagers].numeroSiege =
+            bus[indiceBus].totalSieges - bus[indiceBus].siegesDisponibles + 1;
+
+        // Mettre à jour le numéro de bus du passager
+        passagers[*nbPassagers].numeroBus = numeroBus;
+
+        // Mettre à jour les sièges disponibles
+        bus[indiceBus].siegesDisponibles--;
+
+        printf("Billet réservé avec succès !\n");
+        (*nbPassagers)++;
+    }
+}
+
+// Fonction pour annuler un billet
+void annulerBillet(struct Bus bus[], int nbBuses,
+                   struct Passager passagers[], int *nbPassagers, int idUtilisateur) {
+    printf("\nEntrez le nom du passager : ");
+    char nom[50];
+    scanf("%s", nom);
+
+    int trouve = 0;
+    for (int i = 0; i < *nbPassagers; i++) {
+        if (strcmp(passagers[i].nom, nom) == 0 &&
+            passagers[i].numeroBus == bus[idUtilisateur].numeroBus) {
+            // Augmenter les sièges disponibles
+            int indiceBus = -1;
+            for (int j = 0; j < nbBuses; j++) {
+                if (bus[j].numeroBus == passagers[i].numeroBus) {
+                    indiceBus = j;
+                    break;
+                }
+            }
+            bus[indiceBus].siegesDisponibles++;
+
+            // Supprimer l'entrée du passager
+            for (int j = i; j < (*nbPassagers) - 1; j++) {
+                passagers[j] = passagers[j + 1];
+            }
+            (*nbPassagers)--;
+            trouve = 1;
+            printf("Billet annulé avec succès !\n");
+            break;
+        }
+    }
+
+    if (!trouve) {
+        printf("Passager avec le nom %s non trouvé dans ce bus.\n", nom);
+    }
+}
+
+// Fonction pour vérifier l'état d'un bus spécifique
+void verifierEtatBus(struct Bus bus[], int nbBuses) {
+    // Demander le numéro de bus à vérifier
+    printf("\nEntrez le numéro de bus : ");
+    int numeroBus;
+    scanf("%d", &numeroBus);
+
+    // Rechercher le bus avec le numéro de bus donné
+    int indiceBus = -1;
+    for (int i = 0; i < nbBuses; i++) {
+        if (bus[i].numeroBus == numeroBus) {
+            indiceBus = i;
+            break;
+        }
+    }
+
+    if (indiceBus == -1) {
+        printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
+    } else {
+        // Afficher l'état du bus trouvé
+        printf("\nNuméro du bus : %d\n", bus[indiceBus].numeroBus);
+        printf("Source : %s\n", bus[indiceBus].source);
+        printf("Destination : %s\n", bus[indiceBus].destination);
+        printf("Nombre total de sièges : %d\n", bus[indiceBus].totalSieges);
+        printf("Sièges disponibles : %d\n", bus[indiceBus].siegesDisponibles);
+        printf("Tarif : %.2f\n", bus[indiceBus].tarif);
+        printf("heureDepart: %s\n", bus[indiceBus].heureDepart);
+        printf("heureArrivee: %s\n", bus[indiceBus].heureArrivee);
+        
+    }
+}
+// Fonction pour afficher les détails d'une réservation
+void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur) {
+    printf("\nEntrez le numéro de bus pour afficher/modifier les détails de la réservation : ");
+    int numeroBus;
+    scanf("%d", &numeroBus);
+
+    // Rechercher le bus avec le numéro de bus donné
+    int indiceBus = -1;
+    for (int i = 0; i < nbBuses; i++) {
+        if (bus[i].numeroBus == numeroBus) {
+            indiceBus = i;
+            break;
+        }
+    }
+
+    if (indiceBus == -1) {
+        printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
+    } else {
+        printf("\nDétails de la réservation pour le bus numéro %d :\n", numeroBus);
+
+        // Afficher les détails de chaque passager pour ce bus
+        for (int i = 0; i < nbPassagers; i++) {
+            if (passagers[i].numeroBus == numeroBus && strcmp(passagers[i].nom, "") != 0) {
+                printf("Passager : %s\n", passagers[i].nom);
+                printf("Âge : %d\n", passagers[i].age);
+                printf("Numéro de siège : %d\n", passagers[i].numeroSiege);
+                printf("Numéro de bus : %d\n", passagers[i].numeroBus);
+                printf("----------------------\n");
+            }
+        }
+
+        // Option pour modifier les détails
+        printf("Voulez-vous modifier les détails d'une réservation ? (1 pour Oui, 0 pour Non) : ");
+        int choixModification;
+        scanf("%d", &choixModification);
+
+        if (choixModification == 1) {
+            printf("Entrez le nom du passager à modifier : ");
+            char nom[50];
+            scanf("%s", nom);
+
+            for (int i = 0; i < nbPassagers; i++) {
+                if (strcmp(passagers[i].nom, nom) == 0 &&
+                    passagers[i].numeroBus == bus[indiceBus].numeroBus) {
+                    // Modifier les détails du passager
+                    printf("Nouveau nom du passager : ");
+                    scanf("%s", passagers[i].nom);
+
+                    printf("Nouvel âge du passager : ");
+                    scanf("%d", &passagers[i].age);
+
+                    printf("Détails modifiés avec succès !\n");
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
+int main() {
+    // Initialiser les données des utilisateurs
+    struct Utilisateur utilisateurs[2] = {
+        {"admin", "admin"}, {"admin1", "admin1"},
+    };
+    int nbUtilisateurs = 2;
+
+    // Initialiser les données des bus
+    struct Bus bus[3] = {
+        {101, "Tunis", "Gafsa", 50, 50, 25.0,"6:00","15:00"},
+        {202, "Monastir","sousse", 40, 40, 20.0,"5:00","9:00"},
+        {303, "tozeur", "Tunis", 30, 30, 15.0,"6:00","17:00"},
+};
+int nbBuses = 3;
+struct Passager passagers[500]; // Tableau pour stocker les informations des passagers
+int nbPassagers = 0; // Nombre de passagers
+
+int idUtilisateurConnecte = -1; // Index de l'utilisateur connecté
+
+while (1) {
+    if (idUtilisateurConnecte == -1) {
+        afficherMenuPrincipal();
+        int choix;
+        scanf("%d", &choix);
+
+        if (choix == 1) {
+            char nomUtilisateur[50];
+            char motDePasse[50];
+
+            printf("Entrez le nom d'utilisateur : ");
+            scanf("%s", nomUtilisateur);
+            printf("Entrez le mot de passe : ");
+            scanf("%s", motDePasse);
+
+            idUtilisateurConnecte = connecterUtilisateur(
+                utilisateurs, nbUtilisateurs, nomUtilisateur, motDePasse);
+
+            if (idUtilisateurConnecte == -1) {
+                printf("Échec de la connexion. Veuillez vérifier votre nom d'utilisateur et votre mot de passe.\n");
+            } else {
+                printf("Connexion réussie. Bienvenue, %s !\n", nomUtilisateur);
+            }
+        } else if (choix == 2) {
+            printf("Fermeture du programme.\n");
+            break;
+        } else {
+            printf("Choix invalide. Veuillez réessayer.\n");
+        }
+    } else {
+        afficherMenuUtilisateur();
+        int choixUtilisateur;
+        scanf("%d", &choixUtilisateur);
+
+        switch (choixUtilisateur) {
+        case 1:
+            reserverBillet(bus, nbBuses, passagers, &nbPassagers, idUtilisateurConnecte);
+            break;
+        case 2:
+             affichermodifierDetailsReservation(bus,nbBuses,passagers,nbPassagers, idUtilisateurConnecte) ;
+            break;
+        case 3:
+            annulerBillet(bus, nbBuses, passagers, &nbPassagers, idUtilisateurConnecte);
+            break;
+        case 4:
+            verifierEtatBus(bus, nbBuses);
+            break;
+        case 5:
+            printf("Déconnexion.\n");
+            idUtilisateurConnecte = -1;
+            break;
+        default:
+            printf("Choix invalide. Veuillez réessayer.\n");
+        }
+    }
+}
+
+return 0;}
+
