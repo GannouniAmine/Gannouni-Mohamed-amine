@@ -1,34 +1,72 @@
-# Système de Réservation de Bus (E-Bus)
+# Système de Réservation de Bus - README
 
-Ce programme en langage C implémente un système de réservation de bus, appelé E-Bus. Les utilisateurs peuvent se connecter, réserver des billets, annuler des réservations, vérifier l'état du bus et afficher/modifier les détails des réservations.
+## Description
 
-## Structures de données
+Ce programme implémente un système de réservation de bus avec des fonctionnalités telles que la connexion utilisateur, la réservation et l'annulation de billets, la vérification de l'état d'un bus, et la modification des détails d'une réservation.
 
-Trois structures sont utilisées pour stocker les informations :
+## Fonctionnalités
 
-1. **Bus** : Contient les détails sur chaque bus, tels que le numéro de bus, la source, la destination, le nombre total de sièges, le nombre de sièges disponibles, le tarif, l'heure de départ et l'heure d'arrivée.
-2. **Passager** : Stocke les informations sur les passagers, y compris le nom, l'âge, le numéro de siège et le numéro de bus.
-3. **Utilisateur** : Stocke les informations de connexion de l'utilisateur, notamment le nom d'utilisateur et le mot de passe.
+1. **Menu Principal**
+   - Connexion
+   - Quitter
 
-## Fonctions principales
+2. **Menu Utilisateur**
+   - Réserver un billet
+   - Modifier les détails d'une réservation
+   - Annuler un billet
+   - Vérifier l'état du bus
+   - Déconnexion
 
-1. **afficherMenuPrincipal()** : Affiche le menu principal du programme.
-2. **afficherMenuUtilisateur()** : Affiche le menu utilisateur avec des options telles que réserver un billet, annuler un billet, etc.
-3. **connecterUtilisateur()** : Connecte un utilisateur en vérifiant le nom d'utilisateur et le mot de passe.
-4. **reserverBillet()** : Permet à un utilisateur de réserver un billet pour un bus spécifique.
-5. **annulerBillet()** : Permet à un utilisateur d'annuler un billet réservé.
-6. **verifierEtatBus()** : Affiche l'état d'un bus spécifique, y compris les détails tels que la source, la destination, le nombre total de sièges, etc.
-7. **affichermodifierDetailsReservation()** : Affiche les détails des réservations pour un bus donné et offre la possibilité de modifier les détails d'une réservation existante.
+3. **Fonctions Principales**
+
+   - **Connexion Utilisateur**
+     - Fonction `connecterUtilisateur` pour vérifier les informations de connexion.
+
+   - **Réservation de Billet**
+     - Fonction `reserverBillet` pour réserver un billet en saisissant les détails du passager.
+
+   - **Annulation de Billet**
+     - Fonction `annulerBillet` pour annuler un billet en fournissant le nom du passager.
+
+   - **Vérification de l'État du Bus**
+     - Fonction `verifierEtatBus` pour afficher les détails d'un bus spécifique.
+
+   - **Affichage et Modification des Détails de Réservation**
+     - Fonction `affichermodifierDetailsReservation` pour afficher et modifier les détails d'une réservation.
 
 ## Utilisation
 
-1. Le programme commence par afficher le menu principal où l'utilisateur peut choisir de se connecter ou de quitter.
-2. Une fois connecté, l'utilisateur a accès au menu utilisateur où différentes actions peuvent être effectuées.
-3. L'utilisateur peut réserver un billet, annuler un billet, vérifier l'état du bus, afficher et modifier les détails des réservations, et se déconnecter.
+1. **Connexion**
+   - Entrez le nom d'utilisateur et le mot de passe.
 
-## Compilation
+2. **Menu Utilisateur**
+   - Sélectionnez une option pour effectuer une action spécifique.
 
-Pour compiler le programme, utilisez un compilateur C tel que gcc :
+3. **Réservation de Billet**
+   - Entrez le numéro du bus et les détails du passager.
 
-```bash
-gcc E-Bus.c -o E-Bus
+4. **Annulation de Billet**
+   - Entrez le nom du passager dont vous souhaitez annuler le billet.
+
+5. **Vérification de l'État du Bus**
+   - Entrez le numéro du bus pour afficher ses détails.
+
+6. **Modification des Détails de Réservation**
+   - Sélectionnez l'option pour afficher les détails, puis suivez les instructions pour effectuer les modifications.
+
+## Données Initiales
+
+Le programme est préconfiguré avec des utilisateurs, des informations sur les bus, et peut être étendu avec des données supplémentaires au besoin.
+
+## Auteur
+
+Ce programme a été créé par [Votre Nom].
+
+## Design
+
+Le design actuel du programme est basique et fonctionnel. Cependant, des améliorations de design peuvent être apportées pour améliorer l'expérience utilisateur. Des éléments tels que des messages d'erreur plus conviviaux, une mise en page plus esthétique, et des fonctionnalités de couleur peuvent être ajoutés pour rendre le système plus attractif.
+
+---
+
+_Note: Assurez-vous d'ajuster la section "Auteur" en remplaçant "[Votre Nom]" par vos informations appropriées._
+
