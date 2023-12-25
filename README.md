@@ -58,15 +58,6 @@ Ce programme implémente un système de réservation de bus avec des fonctionnal
 
 Le programme est préconfiguré avec des utilisateurs, des informations sur les bus, et peut être étendu avec des données supplémentaires au besoin.
 
-## Auteur
+## Mohamed amine Gannouni
 
-Ce programme a été créé par [Votre Nom].
-
-## Design
-
-Le design actuel du programme est basique et fonctionnel. Cependant, des améliorations de design peuvent être apportées pour améliorer l'expérience utilisateur. Des éléments tels que des messages d'erreur plus conviviaux, une mise en page plus esthétique, et des fonctionnalités de couleur peuvent être ajoutés pour rendre le système plus attractif.
-
----
-
-_Note: Assurez-vous d'ajuster la section "Auteur" en remplaçant "[Votre Nom]" par vos informations appropriées._
-
+Ce programme a été créé par [Mohamed amine Gannouni].
