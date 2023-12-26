@@ -34,7 +34,8 @@ Ce programme implémente un système de réservation de bus avec des fonctionnal
    - **Affichage et Modification des Détails de Réservation**
      - Fonction `affichermodifierDetailsReservation` pour afficher et modifier les détails d'une réservation.
 4. **Enregistrement des données :**
-     -Les données des passagers et des bus peuvent être enregistrées dans un fichier texte pour une utilisation future.
+   
+      -Les données des passagers et des bus peuvent être enregistrées dans un fichier texte pour une utilisation future.
 ## Utilisateurs initiaux
 
    Le programme est pré-configuré avec les utilisateurs suivants :
