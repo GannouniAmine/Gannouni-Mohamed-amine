@@ -252,7 +252,7 @@ int main() {
         {303, "tozeur", "Tunis", 30, 30, 15.0,"6:00","17:00"},
 };
 int nbBuses = 3;
-struct Passager passagers[1e10];
+struct Passager passagers[500];
 int nbPassagers = 0;
 int idUtilisateurConnecte = -1;
 
