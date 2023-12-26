@@ -42,16 +42,31 @@ void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers
         printf("Erreur lors de l'ouverture du fichier.\n");
         return;
     }
-    // Enregistrer les données des bus
+
+    // En-tête du fichier
+    fprintf(fichier, "=============== Données des Bus ===============\n");
     for (int i = 0; i < nbBuses; i++) {
-        fprintf(fichier, "%d %s %s %d %d %.2f %s %s\n", bus[i].numeroBus, bus[i].source, bus[i].destination,
-                bus[i].totalSieges, bus[i].siegesDisponibles, bus[i].tarif, bus[i].heureDepart, bus[i].heureArrivee);
+        fprintf(fichier, "Bus %d :\n", bus[i].numeroBus);
+        fprintf(fichier, "  - Source: %s\n", bus[i].source);
+        fprintf(fichier, "  - Destination: %s\n", bus[i].destination);
+        fprintf(fichier, "  - Total de sièges: %d\n", bus[i].totalSieges);
+        fprintf(fichier, "  - Sièges disponibles: %d\n", bus[i].siegesDisponibles);
+        fprintf(fichier, "  - Tarif: %.2f\n", bus[i].tarif);
+        fprintf(fichier, "  - Heure de départ: %s\n", bus[i].heureDepart);
+        fprintf(fichier, "  - Heure d'arrivée: %s\n", bus[i].heureArrivee);
+        fprintf(fichier, "\n");
     }
-    // Enregistrer les données des passagers
+
+    fprintf(fichier, "=============== Données des Passagers ===============\n");
     for (int i = 0; i < nbPassagers; i++) {
-        fprintf(fichier, "%s %d %d %d\n", passagers[i].nom, passagers[i].age,
-                passagers[i].numeroSiege, passagers[i].numeroBus);
+        fprintf(fichier, "Passager %d :\n", i + 1);
+        fprintf(fichier, "  - Nom: %s\n", passagers[i].nom);
+        fprintf(fichier, "  - Age: %d\n", passagers[i].age);
+        fprintf(fichier, "  - Numéro de siège: %d\n", passagers[i].numeroSiege);
+        fprintf(fichier, "  - Numéro de bus: %d\n", passagers[i].numeroBus);
+        fprintf(fichier, "\n");
     }
+
     fclose(fichier);
     printf("Données enregistrées dans le fichier.\n");
 }
@@ -192,7 +207,7 @@ void verifierEtatBus(struct Bus bus[], int nbBuses) {
         printf("Tarif : %.2f\n", bus[indiceBus].tarif);
         printf("heureDepart: %s\n", bus[indiceBus].heureDepart);
         printf("heureArrivee: %s\n", bus[indiceBus].heureArrivee);
-        
+
     }
 }
 // Fonction pour afficher les détails d'une réservation
@@ -333,4 +348,3 @@ while (1) {
 }
 
 return 0;}
-
