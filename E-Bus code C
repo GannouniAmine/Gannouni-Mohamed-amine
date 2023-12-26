@@ -24,16 +24,18 @@ struct Utilisateur {
     char nomUtilisateur[50];
     char motDePasse[50];
 };
-void afficherMenuPrincipal();// Déclaration de la fonction pour afficher le menu principal
-void afficherMenuUtilisateur();// Déclaration de la fonction pour afficher le menu utilisateur
-int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,char nomUtilisateur[], char motDePasse[]);// Déclaration de la fonction pour connecter un utilisateur
-void reserverBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);// Déclaration de la fonction pour réserver un billet
-void annulerBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);// Déclaration de la fonction pour annuler un billet
-void verifierEtatBus(struct Bus bus[], int nbBuses);// Déclaration de la fonction pour vérifier l'état du bus
-void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur);// Fonction pour afficher les détails d'une réservation
-void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers[], int nbPassagers);//enregistrer donnees dans un fichier
+void afficherMenuPrincipal();
 
-// Fonction pour enregistrer les données dans un fichier
+void afficherMenuUtilisateur();
+
+int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,char nomUtilisateur[], char motDePasse[]);
+void reserverBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);
+void annulerBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);
+void verifierEtatBus(struct Bus bus[], int nbBuses);
+void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur);
+void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers[], int nbPassagers);
+
+
 void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers[], int nbPassagers) {
     FILE *fichier = fopen("donnees.txt", "w");
     if (fichier == NULL) {
@@ -41,7 +43,6 @@ void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers
         return;
     }
 
-    // En-tête du fichier
     fprintf(fichier, "=============== Données des Bus ===============\n");
     for (int i = 0; i < nbBuses; i++) {
         fprintf(fichier, "Bus %d :\n", bus[i].numeroBus);
@@ -68,7 +69,7 @@ void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers
     fclose(fichier);
     printf("Données enregistrées dans le fichier.\n");
 }
-// Fonction pour afficher le menu principal
+
 void afficherMenuPrincipal() {
     printf("\n*** Système de Réservation de Bus ***\n");
     printf("1. Connexion\n");
@@ -76,7 +77,6 @@ void afficherMenuPrincipal() {
     printf("Entrez votre choix : ");
 }
 
-// Fonction pour afficher le menu utilisateur
 void afficherMenuUtilisateur() {
     printf("\n*** Menu Utilisateur ***\n");
     printf("1. Réserver un billet\n");
@@ -87,7 +87,7 @@ void afficherMenuUtilisateur() {
     printf("Entrez votre choix : ");
 }
 
-// Fonction pour effectuer la connexion de l'utilisateur
+
 int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,
                         char nomUtilisateur[], char motDePasse[]) {
     for (int i = 0; i < nbUtilisateurs; i++) {
@@ -98,7 +98,7 @@ int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,
     return -1; 
 }
 
-// Fonction pour réserver un billet
+
 void reserverBillet(struct Bus bus[], int nbBuses,
                     struct Passager passagers[], int *nbPassagers, int idUtilisateur) {
     printf("\nEntrez le numéro du bus : ");
@@ -129,7 +129,7 @@ void reserverBillet(struct Bus bus[], int nbBuses,
     }
 }
 
-// Fonction pour annuler un billet
+
 void annulerBillet(struct Bus bus[], int nbBuses,
                    struct Passager passagers[], int *nbPassagers, int idUtilisateur) {
     printf("\nEntrez le nom du passager : ");
@@ -163,7 +163,6 @@ void annulerBillet(struct Bus bus[], int nbBuses,
     }
 }
 
-// Fonction pour vérifier l'état d'un bus spécifique
 void verifierEtatBus(struct Bus bus[], int nbBuses) {
     printf("\nEntrez le numéro de bus : ");
     int numeroBus;
@@ -190,7 +189,8 @@ void verifierEtatBus(struct Bus bus[], int nbBuses) {
 
     }
 }
-// Fonction pour afficher les détails d'une réservation
+
+
 void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur) {
     printf("\nEntrez le numéro de bus pour afficher/modifier les détails de la réservation : ");
     int numeroBus;
@@ -239,13 +239,11 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
     }
 }
 int main() {
-    // Initialiser les données des utilisateurs
     struct Utilisateur utilisateurs[2] = {
         {"admin", "admin"}, {"admin1", "admin1"},
     };
     int nbUtilisateurs = 2;
 
-    // Initialiser les données des bus
     struct Bus bus[3] = {
         {101, "Tunis", "Gafsa", 50, 50, 25.0,"6:00","15:00"},
         {202, "Monastir","sousse", 40, 40, 20.0,"5:00","9:00"},
