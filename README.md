@@ -75,3 +75,7 @@ Le programme est préconfiguré avec des utilisateurs, des informations sur les 
 ## Mohamed amine Gannouni
 
 Ce programme a été créé par [Mohamed amine Gannouni].
+
+
+
+   **Remarque :** Veillez à entrer des données valides. Des données incorrectes peuvent entraîner des erreurs dans le programme.
