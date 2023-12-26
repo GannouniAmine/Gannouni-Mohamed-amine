@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Définir une structure pour stocker les informations sur les bus
 struct Bus {
     int numeroBus;
     char source[50];
@@ -14,14 +13,13 @@ struct Bus {
     char heureArrivee[5];
 };
 
-// Définir une structure pour stocker les informations sur les passagers
 struct Passager {
     char nom[50];
     int age;
     int numeroSiege;
     int numeroBus;
 };
-// Définir une structure pour stocker les informations de connexion de l'utilisateur
+
 struct Utilisateur {
     char nomUtilisateur[50];
     char motDePasse[50];
@@ -94,10 +92,10 @@ int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,
                         char nomUtilisateur[], char motDePasse[]) {
     for (int i = 0; i < nbUtilisateurs; i++) {
         if (strcmp(utilisateurs[i].nomUtilisateur, nomUtilisateur) == 0 && strcmp(utilisateurs[i].motDePasse, motDePasse) == 0) {
-            return i; // Retourne l'index de l'utilisateur connecté
+            return i;
         }
     }
-    return -1; // Retourne -1 si la connexion échoue
+    return -1; 
 }
 
 // Fonction pour réserver un billet
@@ -106,8 +104,6 @@ void reserverBillet(struct Bus bus[], int nbBuses,
     printf("\nEntrez le numéro du bus : ");
     int numeroBus;
     scanf("%d", &numeroBus);
-
-    // Rechercher le bus avec le numéro de bus donné
     int indiceBus = -1;
     for (int i = 0; i < nbBuses; i++) {
         if (bus[i].numeroBus == numeroBus) {
@@ -115,7 +111,6 @@ void reserverBillet(struct Bus bus[], int nbBuses,
             break;
         }
     }
-
     if (indiceBus == -1) {
         printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
     } else if (bus[indiceBus].siegesDisponibles == 0) {
@@ -126,17 +121,9 @@ void reserverBillet(struct Bus bus[], int nbBuses,
 
         printf("Entrez l'âge du passager : ");
         scanf("%d", &passagers[*nbPassagers].age);
-
-        // Assigner un numéro de siège au passager
-        passagers[*nbPassagers].numeroSiege =
-            bus[indiceBus].totalSieges - bus[indiceBus].siegesDisponibles + 1;
-
-        // Mettre à jour le numéro de bus du passager
+        passagers[*nbPassagers].numeroSiege =bus[indiceBus].totalSieges - bus[indiceBus].siegesDisponibles + 1;
         passagers[*nbPassagers].numeroBus = numeroBus;
-
-        // Mettre à jour les sièges disponibles
         bus[indiceBus].siegesDisponibles--;
-
         printf("Billet réservé avec succès !\n");
         (*nbPassagers)++;
     }
@@ -153,7 +140,6 @@ void annulerBillet(struct Bus bus[], int nbBuses,
     for (int i = 0; i < *nbPassagers; i++) {
         if (strcmp(passagers[i].nom, nom) == 0 &&
             passagers[i].numeroBus == bus[idUtilisateur].numeroBus) {
-            // Augmenter les sièges disponibles
             int indiceBus = -1;
             for (int j = 0; j < nbBuses; j++) {
                 if (bus[j].numeroBus == passagers[i].numeroBus) {
@@ -162,8 +148,6 @@ void annulerBillet(struct Bus bus[], int nbBuses,
                 }
             }
             bus[indiceBus].siegesDisponibles++;
-
-            // Supprimer l'entrée du passager
             for (int j = i; j < (*nbPassagers) - 1; j++) {
                 passagers[j] = passagers[j + 1];
             }
@@ -181,12 +165,9 @@ void annulerBillet(struct Bus bus[], int nbBuses,
 
 // Fonction pour vérifier l'état d'un bus spécifique
 void verifierEtatBus(struct Bus bus[], int nbBuses) {
-    // Demander le numéro de bus à vérifier
     printf("\nEntrez le numéro de bus : ");
     int numeroBus;
     scanf("%d", &numeroBus);
-
-    // Rechercher le bus avec le numéro de bus donné
     int indiceBus = -1;
     for (int i = 0; i < nbBuses; i++) {
         if (bus[i].numeroBus == numeroBus) {
@@ -198,7 +179,6 @@ void verifierEtatBus(struct Bus bus[], int nbBuses) {
     if (indiceBus == -1) {
         printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
     } else {
-        // Afficher l'état du bus trouvé
         printf("\nNuméro du bus : %d\n", bus[indiceBus].numeroBus);
         printf("Source : %s\n", bus[indiceBus].source);
         printf("Destination : %s\n", bus[indiceBus].destination);
@@ -215,8 +195,6 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
     printf("\nEntrez le numéro de bus pour afficher/modifier les détails de la réservation : ");
     int numeroBus;
     scanf("%d", &numeroBus);
-
-    // Rechercher le bus avec le numéro de bus donné
     int indiceBus = -1;
     for (int i = 0; i < nbBuses; i++) {
         if (bus[i].numeroBus == numeroBus) {
@@ -229,8 +207,6 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
         printf("Bus avec le numéro %d non trouvé.\n", numeroBus);
     } else {
         printf("\nDétails de la réservation pour le bus numéro %d :\n", numeroBus);
-
-        // Afficher les détails de chaque passager pour ce bus
         for (int i = 0; i < nbPassagers; i++) {
             if (passagers[i].numeroBus == numeroBus && strcmp(passagers[i].nom, "") != 0) {
                 printf("Passager : %s\n", passagers[i].nom);
@@ -240,8 +216,6 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
                 printf("----------------------\n");
             }
         }
-
-        // Option pour modifier les détails
         printf("Voulez-vous modifier les détails d'une réservation ? (1 pour Oui, 0 pour Non) : ");
         int choixModification;
         scanf("%d", &choixModification);
@@ -250,17 +224,13 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
             printf("Entrez le nom du passager à modifier : ");
             char nom[50];
             scanf("%s", nom);
-
             for (int i = 0; i < nbPassagers; i++) {
                 if (strcmp(passagers[i].nom, nom) == 0 &&
                     passagers[i].numeroBus == bus[indiceBus].numeroBus) {
-                    // Modifier les détails du passager
                     printf("Nouveau nom du passager : ");
                     scanf("%s", passagers[i].nom);
-
                     printf("Nouvel âge du passager : ");
                     scanf("%d", &passagers[i].age);
-
                     printf("Détails modifiés avec succès !\n");
                     break;
                 }
@@ -268,8 +238,6 @@ void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Pas
         }
     }
 }
-
-
 int main() {
     // Initialiser les données des utilisateurs
     struct Utilisateur utilisateurs[2] = {
@@ -284,10 +252,9 @@ int main() {
         {303, "tozeur", "Tunis", 30, 30, 15.0,"6:00","17:00"},
 };
 int nbBuses = 3;
-struct Passager passagers[500]; // Tableau pour stocker les informations des passagers
-int nbPassagers = 0; // Nombre de passagers
-
-int idUtilisateurConnecte = -1; // Index de l'utilisateur connecté
+struct Passager passagers[1e10];
+int nbPassagers = 0;
+int idUtilisateurConnecte = -1;
 
 while (1) {
     if (idUtilisateurConnecte == -1) {
