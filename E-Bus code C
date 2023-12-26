@@ -57,8 +57,7 @@ void afficherMenuUtilisateur() {
 int connecterUtilisateur(struct Utilisateur utilisateurs[], int nbUtilisateurs,
                         char nomUtilisateur[], char motDePasse[]) {
     for (int i = 0; i < nbUtilisateurs; i++) {
-        if (strcmp(utilisateurs[i].nomUtilisateur, nomUtilisateur) == 0 &&
-            strcmp(utilisateurs[i].motDePasse, motDePasse) == 0) {
+        if (strcmp(utilisateurs[i].nomUtilisateur, nomUtilisateur) == 0 && strcmp(utilisateurs[i].motDePasse, motDePasse) == 0) {
             return i; // Retourne l'index de l'utilisateur connecté
         }
     }
