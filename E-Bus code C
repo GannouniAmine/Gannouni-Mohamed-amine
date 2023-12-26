@@ -33,7 +33,28 @@ void reserverBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], i
 void annulerBillet(struct Bus bus[], int nbBuses,struct Passager passagers[], int *nbPassagers, int idUtilisateur);// Déclaration de la fonction pour annuler un billet
 void verifierEtatBus(struct Bus bus[], int nbBuses);// Déclaration de la fonction pour vérifier l'état du bus
 void affichermodifierDetailsReservation(struct Bus bus[], int nbBuses,struct Passager passagers[], int nbPassagers, int idUtilisateur);// Fonction pour afficher les détails d'une réservation
+void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers[], int nbPassagers);//enregistrer donnees dans un fichier
 
+// Fonction pour enregistrer les données dans un fichier
+void enregistrerDonnees(struct Bus bus[], int nbBuses, struct Passager passagers[], int nbPassagers) {
+    FILE *fichier = fopen("donnees.txt", "w");
+    if (fichier == NULL) {
+        printf("Erreur lors de l'ouverture du fichier.\n");
+        return;
+    }
+    // Enregistrer les données des bus
+    for (int i = 0; i < nbBuses; i++) {
+        fprintf(fichier, "%d %s %s %d %d %.2f %s %s\n", bus[i].numeroBus, bus[i].source, bus[i].destination,
+                bus[i].totalSieges, bus[i].siegesDisponibles, bus[i].tarif, bus[i].heureDepart, bus[i].heureArrivee);
+    }
+    // Enregistrer les données des passagers
+    for (int i = 0; i < nbPassagers; i++) {
+        fprintf(fichier, "%s %d %d %d\n", passagers[i].nom, passagers[i].age,
+                passagers[i].numeroSiege, passagers[i].numeroBus);
+    }
+    fclose(fichier);
+    printf("Données enregistrées dans le fichier.\n");
+}
 // Fonction pour afficher le menu principal
 void afficherMenuPrincipal() {
     printf("\n*** Système de Réservation de Bus ***\n");
@@ -301,6 +322,7 @@ while (1) {
             verifierEtatBus(bus, nbBuses);
             break;
         case 5:
+            enregistrerDonnees(bus, nbBuses, passagers, nbPassagers);
             printf("Déconnexion.\n");
             idUtilisateurConnecte = -1;
             break;
