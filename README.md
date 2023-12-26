@@ -35,18 +35,18 @@ Ce programme implémente un système de réservation de bus avec des fonctionnal
      - Fonction `affichermodifierDetailsReservation` pour afficher et modifier les détails d'une réservation.
 ## Utilisateurs initiaux
 
-Le programme est pré-configuré avec les utilisateurs suivants :
+   Le programme est pré-configuré avec les utilisateurs suivants :
 
-1. Utilisateur : admin, Mot de passe : admin
-2. Utilisateur : admin1, Mot de passe : admin1
+   1. Utilisateur : admin, Mot de passe : admin
+   2. Utilisateur : admin1, Mot de passe : admin1
 
 ## Bus initiaux
 
-Le programme est également pré-configuré avec les données initiales de trois bus :
+   Le programme est également pré-configuré avec les données initiales de trois bus :
 
-1. Bus 101 - Source: Tunis, Destination: Gafsa, Sièges: 50, Tarif: 25.0, Départ: 6:00, Arrivée: 15:00
-2. Bus 202 - Source: Monastir, Destination: Sousse, Sièges: 40, Tarif: 20.0, Départ: 5:00, Arrivée: 9:00
-3. Bus 303 - Source: Tozeur, Destination: Tunis, Sièges: 30, Tarif: 15.0, Départ: 6:00, Arrivée: 17:00
+   1. Bus 101 - Source: Tunis, Destination: Gafsa, Sièges: 50, Tarif: 25.0, Départ: 6:00, Arrivée: 15:00
+   2. Bus 202 - Source: Monastir, Destination: Sousse, Sièges: 40, Tarif: 20.0, Départ: 5:00, Arrivée: 9:00
+   3. Bus 303 - Source: Tozeur, Destination: Tunis, Sièges: 30, Tarif: 15.0, Départ: 6:00, Arrivée: 17:00
 
 ## Utilisation
 
